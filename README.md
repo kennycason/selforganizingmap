@@ -1,5 +1,4 @@
-Self-Organizing Map/自己組織化写像/自組織映射網路
-===================
+<h2>Self-Organizing Map/自己組織化写像/自組織映射網路</h2>
 
 
 <table>
