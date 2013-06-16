@@ -1,4 +1,4 @@
-Self-Organizing Map
+Self-Organizing Map/自己組織化写像
 ===================
 
 
