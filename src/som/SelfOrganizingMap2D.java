@@ -1,7 +1,7 @@
 package som;
 
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.map.MapLocation2D;
 import lib.vector.AbstractVector;
@@ -9,7 +9,7 @@ import lib.vector.AbstractVector;
 public class SelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 
 	
-	private WeightVectorND[][] weights;
+	private WeightVector[][] weights;
 
 	public SelfOrganizingMap2D(SelfOrganizingMapConfig config) {
 		super(config);
@@ -17,10 +17,10 @@ public class SelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 	}
 
 	private void init() {
-		weights = new WeightVectorND[config.dimX][config.dimY];
+		weights = new WeightVector[config.dimX][config.dimY];
 		for (int y = 0; y < config.dimY; y++) {
 			for (int x = 0; x < config.dimX; x++) {	
-				weights[x][y] = new WeightVectorND(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
+				weights[x][y] = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
 			}
 		}
 	}
@@ -51,12 +51,12 @@ public class SelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 	 */
 	public void scaleNeighbors(AbstractMapLocation locIn, AbstractWeightVector actualIn, double t2) {
 		MapLocation2D loc = (MapLocation2D) locIn;
-		WeightVectorND actual = (WeightVectorND) actualIn;
+		WeightVector actual = (WeightVector) actualIn;
 		
 		int R2 = (int) Math.round(((double) (config.radius) * (1.0 - t2)) / 2.0);
 		
-		WeightVectorND outer = new WeightVectorND(AbstractVector.buildDefaultValues(config.weightVectorDimension, R2));
-		WeightVectorND center = new WeightVectorND(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0)); 
+		WeightVector outer = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, R2));
+		WeightVector center = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0)); 
 		
 		double distNormalized = center.distance(outer);
 		
@@ -88,12 +88,12 @@ public class SelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 		}
 	}
 	
-	public WeightVectorND getRandomSample() {
-		return (WeightVectorND) config.samples[Math.abs(r.nextInt()) % config.samples.length];
+	public WeightVector getRandomSample() {
+		return (WeightVector) config.samples[Math.abs(r.nextInt()) % config.samples.length];
 	}
 	
-	public WeightVectorND getSample(int i ) {
-		return (WeightVectorND) config.samples[i];
+	public WeightVector getSample(int i ) {
+		return (WeightVector) config.samples[i];
 	}
 	
 	
@@ -111,7 +111,7 @@ public class SelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 		return processed;
 	}
 	
-	public WeightVectorND[][] getWeightVectors() {
+	public WeightVector[][] getWeightVectors() {
 		return weights;
 	}
 

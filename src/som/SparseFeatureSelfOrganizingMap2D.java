@@ -3,44 +3,44 @@ package som;
 import som.features.AbstractWeightVector;
 import som.features.WeightVector;
 import som.map.AbstractMapLocation;
-import som.map.MapLocation1D;
+import som.map.MapLocation2D;
 import lib.vector.AbstractVector;
 
-public class SelfOrganizingMap1D extends AbstractSelfOrganizingMap {
+public class SparseFeatureSelfOrganizingMap2D extends AbstractSelfOrganizingMap {
 
 	
-	private WeightVector[] weights;
+	private WeightVector[][] weights;
 
-	public SelfOrganizingMap1D(SelfOrganizingMapConfig config) {
+	public SparseFeatureSelfOrganizingMap2D(SelfOrganizingMapConfig config) {
 		super(config);
 		this.init();
 	}
 
 	private void init() {
-		weights = new WeightVector[config.dimX];
-
+		weights = new WeightVector[config.dimX][config.dimY];
+		for (int y = 0; y < config.dimY; y++) {
 			for (int x = 0; x < config.dimX; x++) {	
-				weights[x] = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
+				weights[x][y] = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
 			}
-	
+		}
 	}
 
-	public MapLocation1D calculateBestMatchingUnit(AbstractWeightVector weight) {
-		MapLocation1D[] matches = new MapLocation1D[config.dimX];
+	public MapLocation2D calculateBestMatchingUnit(AbstractWeightVector weight) {
+		MapLocation2D[] matches = new MapLocation2D[config.dimX * config.dimY];
 		int numMatches = 0;
 		double shortestDistance = Double.MAX_VALUE;
-
+		for (int y = 0; y < config.dimY; y++) {
 			for (int x = 0; x < config.dimX; x++) {
-				double d = weights[x].distance(weight);
+				double d = weights[x][y].distance(weight);
 				if (d < shortestDistance) {
-					matches[0] = new MapLocation1D(x);
+					matches[0] = new MapLocation2D(x, y);
 					shortestDistance = d;
 					numMatches = 1;
 				} else if (d == shortestDistance) {
-					matches[numMatches++] = new MapLocation1D(x);
+					matches[numMatches++] = new MapLocation2D(x, y);
 				}
 			}
-
+		}
 		return matches[Math.abs(r.nextInt()) % numMatches];
 	}
 
@@ -50,41 +50,42 @@ public class SelfOrganizingMap1D extends AbstractSelfOrganizingMap {
 	 * hexagons, etc
 	 */
 	public void scaleNeighbors(AbstractMapLocation locIn, AbstractWeightVector actualIn, double t2) {
-		MapLocation1D loc = (MapLocation1D) locIn;
+		MapLocation2D loc = (MapLocation2D) locIn;
 		WeightVector actual = (WeightVector) actualIn;
 		
 		int R2 = (int) Math.round(((double) (config.radius) * (1.0 - t2)) / 2.0);
 		
 		WeightVector outer = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, R2));
-		WeightVector center = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
+		WeightVector center = new WeightVector(AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0)); 
 		
 		double distNormalized = center.distance(outer);
 		
+		for (int y = -R2; y < R2; y++) {
 			for (int x = -R2; x < R2; x++) {
-				if (x + loc.x() >= 0 && x + loc.x() < config.dimX) {
+				if (y + loc.y() >= 0 && y + loc.y() < config.dimY
+						&& x + loc.x() >= 0 && x + loc.x() < config.dimX) {
 					// Get distance from center point and normalize it
 					//for(int i = 0; i < outer.size(); i++) { 
 						
 					//}
 					outer.set(0, x);
+					outer.set(1, y);
 					double distance = outer.distance(center);
 					
 					distance /= distNormalized;
-					
 					// Get how much to scale it by
 					double t = Math.exp(-1.0 * (Math.pow(distance, 2.0)) / 0.15);
-
+					
 					// Amount a neuron can learn decreases with time
-					// The 4 is chosen and the +1 is to avoid divide by 0'sconfig.weightVectorDimension
+					// The 4 is chosen and the +1 is to avoid divide by 0's
 					t /= (t2 * 4.0 + 1.0);
 					
-
 					// Scale it with the parametric equation
-					weights[loc.x() + x] = (actual.mult(t)).add(weights[loc.x() + x].mult(1.0 - t));
+					weights[loc.x() + x][loc.y() + y] = (actual.mult(t)).add(weights[loc.x() + x][loc.y() + y].mult(1.0 - t));
 				}
 			}
 
-
+		}
 	}
 	
 	public WeightVector getRandomSample() {
@@ -95,7 +96,6 @@ public class SelfOrganizingMap1D extends AbstractSelfOrganizingMap {
 		return (WeightVector) config.samples[i];
 	}
 	
-	
 	/**
 	 * returns an array of distances between the input and the sample data
 	 * @param input
@@ -104,22 +104,29 @@ public class SelfOrganizingMap1D extends AbstractSelfOrganizingMap {
 	public double[] processInput(AbstractWeightVector input) {
 		double[] processed = new double[config.samples.length];
 		for(int i = 0; i < config.samples.length; i++) {
-			MapLocation1D loc = calculateBestMatchingUnit(input);
-			processed[i] = config.samples[i].distance(weights[loc.x()]);
+			MapLocation2D loc = calculateBestMatchingUnit(input);
+			processed[i] = config.samples[i].distance(weights[loc.x()][loc.y()]);
 		}
 		return processed;
 	}
 	
-	public WeightVector[] getWeightVectors() {
+	public WeightVector[][] getWeightVectors() {
 		return weights;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		for (int y = 0; y < config.dimY; y++) {
 			for (int x = 0; x < config.dimX; x++) {
-				sb.append(weights[x]);
+				sb.append(weights[x][y]);
+				if (x < config.dimX - 1) {
+					sb.append(", ");
+				}
 			}
-
+			if (y < config.dimY - 1) {
+				sb.append("\n");
+			}
+		}
 		return sb.toString();
 	}
 }

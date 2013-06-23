@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import som.SelfOrganizingMap2D;
 import som.SelfOrganizingMapConfig;
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.save.State;
 
@@ -106,12 +106,12 @@ public class SelfOrganizingMapRGBViewerWeightVector1D extends Canvas {
 				};	
 	*/
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(Color.BLACK.getRGB()), // black
-				new WeightVectorND(Color.PINK.getRGB()), // pink
-				new WeightVectorND(Color.WHITE.getRGB()), // white
-				new WeightVectorND(Color.BLUE.getRGB()), // blue
-				new WeightVectorND(Color.RED.getRGB()), // red
-				new WeightVectorND(Color.GREEN.getRGB()), // green
+				new WeightVector(Color.BLACK.getRGB()), // black
+				new WeightVector(Color.PINK.getRGB()), // pink
+				new WeightVector(Color.WHITE.getRGB()), // white
+				new WeightVector(Color.BLUE.getRGB()), // blue
+				new WeightVector(Color.RED.getRGB()), // red
+				new WeightVector(Color.GREEN.getRGB()), // green
 				};
 	
 

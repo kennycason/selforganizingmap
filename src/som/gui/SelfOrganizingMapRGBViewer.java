@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import som.SelfOrganizingMap2D;
 import som.SelfOrganizingMapConfig;
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.save.State;
 
@@ -99,17 +99,17 @@ public class SelfOrganizingMapRGBViewer extends Canvas {
 		config.dimY = dim;
 		
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(0.0, 0.0, 0.0), // black
-				new WeightVectorND(1.0, 1.0, 1.0), // white
+				new WeightVector(0.0, 0.0, 0.0), // black
+				new WeightVector(1.0, 1.0, 1.0), // white
 				};	
 		
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(0.0, 0.0, 0.0), // black
-				new WeightVectorND(1.0, 0.0, 1.0), // pink
-				new WeightVectorND(1.0, 1.0, 1.0), // white
-				new WeightVectorND(0.0, 0.0, 1.0), // blue
-				new WeightVectorND(1.0, 0.0, 0.0), // red
-				new WeightVectorND(0.0, 1.0, 0.0), // green
+				new WeightVector(0.0, 0.0, 0.0), // black
+				new WeightVector(1.0, 0.0, 1.0), // pink
+				new WeightVector(1.0, 1.0, 1.0), // white
+				new WeightVector(0.0, 0.0, 1.0), // blue
+				new WeightVector(1.0, 0.0, 0.0), // red
+				new WeightVector(0.0, 1.0, 0.0), // green
 				};
 		
 	/*	config.samples = new AbstractWeightVector[]{
@@ -120,14 +120,14 @@ public class SelfOrganizingMapRGBViewer extends Canvas {
 				};*/
 		
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(0.0, 0.0, 0.0), // black
-				new WeightVectorND(0.0, 0.0, 1.0), // blue
-				new WeightVectorND(0.0, 1.0, 0.0), // green
-				new WeightVectorND(0.0, 1.0, 1.0), // 		
-				new WeightVectorND(1.0, 0.0, 0.0), // red
-				new WeightVectorND(1.0, 0.0, 1.0), // pink
-				new WeightVectorND(1.0, 1.0, 0.0), // 
-				new WeightVectorND(1.0, 1.0, 1.0), // white
+				new WeightVector(0.0, 0.0, 0.0), // black
+				new WeightVector(0.0, 0.0, 1.0), // blue
+				new WeightVector(0.0, 1.0, 0.0), // green
+				new WeightVector(0.0, 1.0, 1.0), // 		
+				new WeightVector(1.0, 0.0, 0.0), // red
+				new WeightVector(1.0, 0.0, 1.0), // pink
+				new WeightVector(1.0, 1.0, 0.0), // 
+				new WeightVector(1.0, 1.0, 1.0), // white
 
 				};
 		

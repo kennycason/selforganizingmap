@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import som.SelfOrganizingMap2D;
 import som.SelfOrganizingMapConfig;
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.save.State;
 
@@ -106,10 +106,10 @@ public class SelfOrganizingMapGridViewer extends Canvas {
 			config.samples[i] = new WeightVectorND(-0.5 + r.nextDouble(), -0.5 + r.nextDouble());
 		}*/
 		config.samples = new AbstractWeightVector[] {
-				new WeightVectorND(-.5, -.5),
-				new WeightVectorND(-.5, .5),
-				new WeightVectorND(.5, -.5),
-				new WeightVectorND(.5, .5),
+				new WeightVector(-.5, -.5),
+				new WeightVector(-.5, .5),
+				new WeightVector(.5, -.5),
+				new WeightVector(.5, .5),
 			/*	new WeightVectorND(-0.5 + r.nextDouble(), -0.5 + r.nextDouble()),
 				new WeightVectorND(-0.5 + r.nextDouble(), -0.5 + r.nextDouble()),
 				new WeightVectorND(-0.5 + r.nextDouble(), -0.5 + r.nextDouble()),

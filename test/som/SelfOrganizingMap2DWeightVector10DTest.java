@@ -4,7 +4,7 @@ package som;
 import org.junit.Test;
 
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 
 public class SelfOrganizingMap2DWeightVector10DTest {
@@ -18,16 +18,16 @@ public class SelfOrganizingMap2DWeightVector10DTest {
 		config.radius = 150;
 		
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8}), 
-				new WeightVectorND(new double[] {0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}), 
-				new WeightVectorND(new double[] {0.1, 0.1, 0.4, 0.4, 0.5, 0.1, 0.1, 0.4, 0.4, 0.5}), 
+				new WeightVector(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8}), 
+				new WeightVector(new double[] {0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}), 
+				new WeightVector(new double[] {0.1, 0.1, 0.4, 0.4, 0.5, 0.1, 0.1, 0.4, 0.4, 0.5}), 
 				};
 
 		AbstractSelfOrganizingMap som = new SelfOrganizingMap2D(config);
 		System.out.println("start state:");
 	//	System.out.println(som);
 		System.out.println("Input (0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8)");
-		WeightVectorND sampleIn = new WeightVectorND(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8});
+		WeightVector sampleIn = new WeightVector(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8});
 		double[] processed = som.processInput(sampleIn);
 		for(int i = 0; i < config.samples.length; i++) {
 			System.out.println(config.samples[i] + " => " + processed[i]);
@@ -66,7 +66,7 @@ public class SelfOrganizingMap2DWeightVector10DTest {
 	//	System.out.println(som);
 	
 		System.out.println("Input (0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8)");
-		sampleIn = new WeightVectorND(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8});
+		sampleIn = new WeightVector(new double[] {0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8});
 		processed = som.processInput(sampleIn);
 		for(int i = 0; i < config.samples.length; i++) {
 			System.out.println(config.samples[i] + " => " + processed[i]);

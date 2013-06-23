@@ -1,7 +1,7 @@
 package som;
 
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.map.MapLocation4D;
 import lib.vector.AbstractVector;
@@ -9,7 +9,7 @@ import lib.vector.AbstractVector;
 public class SelfOrganizingMap4D extends
 		AbstractSelfOrganizingMap {
 
-	private WeightVectorND[][][][] weights;
+	private WeightVector[][][][] weights;
 
 	public SelfOrganizingMap4D(SelfOrganizingMapConfig config) {
 		super(config);
@@ -17,12 +17,12 @@ public class SelfOrganizingMap4D extends
 	}
 
 	private void init() {
-		weights = new WeightVectorND[config.dimX][config.dimY][config.dimZ][config.dimU];
+		weights = new WeightVector[config.dimX][config.dimY][config.dimZ][config.dimU];
 		for (int u = 0; u < config.dimU; u++) {
 			for (int z = 0; z < config.dimZ; z++) {
 				for (int y = 0; y < config.dimY; y++) {
 					for (int x = 0; x < config.dimX; x++) {
-						weights[x][y][z][u] = new WeightVectorND(
+						weights[x][y][z][u] = new WeightVector(
 								AbstractVector.buildDefaultValues(config.weightVectorDimension, 0.0));
 					}
 				}
@@ -63,14 +63,13 @@ public class SelfOrganizingMap4D extends
 	public void scaleNeighbors(AbstractMapLocation locIn,
 			AbstractWeightVector actualIn, double t2) {
 		MapLocation4D loc = (MapLocation4D) locIn;
-		WeightVectorND actual = (WeightVectorND) actualIn;
+		WeightVector actual = (WeightVector) actualIn;
 
-		int R2 = (int) Math
-				.round(((double) (config.radius) * (1.0 - t2)) / 2.0);
+		int R2 = (int) Math.round(((double) (config.radius) * (1.0 - t2)) / 2.0);
 
-		WeightVectorND outer = new WeightVectorND(config.weightVectorDimension,
+		WeightVector outer = new WeightVector(config.weightVectorDimension,
 				R2);
-		WeightVectorND center = new WeightVectorND(config.weightVectorDimension,
+		WeightVector center = new WeightVector(config.weightVectorDimension,
 				0.0);
 
 		double distNormalized = center.distance(outer);
@@ -105,11 +104,9 @@ public class SelfOrganizingMap4D extends
 							t /= (t2 * 4.0 + 1.0);
 
 							// Scale it with the parametric equation
-							weights[loc.x() + x][loc.y() + y][loc.z() + z][loc
-									.u() + u] = (actual.mult(t))
-									.add(weights[loc.x() + x][loc.y() + y][loc
-											.z() + z][loc.z() + u]
-											.mult(1.0 - t));
+							weights[loc.x() + x][loc.y() + y][loc.z() + z][loc.u() + u] = 
+									actual.mult(t)
+								.add(weights[loc.x() + x][loc.y() + y][loc.z() + z][loc.z() + u].mult(1.0 - t));
 						}
 					}
 				}
@@ -117,13 +114,13 @@ public class SelfOrganizingMap4D extends
 		}
 	}
 
-	public WeightVectorND getRandomSample() {
-		return (WeightVectorND) config.samples[Math.abs(r.nextInt())
+	public WeightVector getRandomSample() {
+		return (WeightVector) config.samples[Math.abs(r.nextInt())
 				% config.samples.length];
 	}
 
-	public WeightVectorND getSample(int i) {
-		return (WeightVectorND) config.samples[i];
+	public WeightVector getSample(int i) {
+		return (WeightVector) config.samples[i];
 	}
 
 	public int getSampleSize() {
@@ -171,7 +168,7 @@ public class SelfOrganizingMap4D extends
 		return sb.toString();
 	}
 
-	public WeightVectorND[][][][] getWeightVectors() {
+	public WeightVector[][][][] getWeightVectors() {
 		return weights;
 	}
 }

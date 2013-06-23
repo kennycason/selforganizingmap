@@ -4,7 +4,7 @@ package som;
 import org.junit.Test;
 
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 
 public class SelfOrganizingMap2DTest {
@@ -16,9 +16,9 @@ public class SelfOrganizingMap2DTest {
 		config.dimY = 10;
 		config.weightVectorDimension = 2;
 		config.samples = new AbstractWeightVector[]{
-				new WeightVectorND(0.0, 0.0),
-				new WeightVectorND(0.5, 0.5),
-				new WeightVectorND(0.9, 0.9),
+				new WeightVector(0.0, 0.0),
+				new WeightVector(0.5, 0.5),
+				new WeightVector(0.9, 0.9),
 				};
 
 		AbstractSelfOrganizingMap som = new SelfOrganizingMap2D(config);
@@ -61,21 +61,21 @@ public class SelfOrganizingMap2DTest {
 		System.out.println();
 		
 		System.out.println("Input (0.8, 0.8)");
-		WeightVectorND sample = new WeightVectorND(0.8, 0.8);
+		WeightVector sample = new WeightVector(0.8, 0.8);
 		double[] processed = som.processInput(sample);
 		for(int i = 0; i < config.samples.length; i++) {
 			System.out.println(config.samples[i] + " => " + processed[i]);
 		}
 		
 		System.out.println("Input (0.9, 0.9)");
-		sample = new WeightVectorND(0.9, 0.9);
+		sample = new WeightVector(0.9, 0.9);
 		processed = som.processInput(sample);
 		for(int i = 0; i < config.samples.length; i++) {
 			System.out.println(config.samples[i] + " => " + processed[i]);
 		}
 		
 		System.out.println("Input (0.3, 0.5)");
-		sample = new WeightVectorND(0.3, 0.5);
+		sample = new WeightVector(0.3, 0.5);
 		processed = som.processInput(sample);
 		for(int i = 0; i < config.samples.length; i++) {
 			System.out.println(config.samples[i] + " => " + processed[i]);

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 
 public class WeightVectorTest {
 
@@ -13,11 +13,11 @@ public class WeightVectorTest {
 	
 	@Test
 	public void Test1D() {
-		WeightVectorND vector = new WeightVectorND(0.5);
+		WeightVector vector = new WeightVector(0.5);
 		
 		assertEquals(0.5, vector.get(0), DELTA);
 		
-		WeightVectorND temp = vector.add(2.0);
+		WeightVector temp = vector.add(2.0);
 		
 		assertEquals(2.5, temp.get(0), DELTA);
 		
@@ -25,12 +25,12 @@ public class WeightVectorTest {
 	
 	@Test
 	public void Test2D() {
-		WeightVectorND vector = new WeightVectorND(0.5, 0.6);
+		WeightVector vector = new WeightVector(0.5, 0.6);
 		
 		assertEquals(0.5, vector.get(0), DELTA);
 		assertEquals(0.6, vector.get(1), DELTA);
 		
-		WeightVectorND temp = vector.add(2.0);
+		WeightVector temp = vector.add(2.0);
 		
 		assertEquals(2.5, temp.get(0), DELTA);
 		assertEquals(2.6, temp.get(1), DELTA);
@@ -39,13 +39,13 @@ public class WeightVectorTest {
 
 	@Test
 	public void Test3D() {
-		WeightVectorND vector = new WeightVectorND(0.5, 0.6, 0.7);
+		WeightVector vector = new WeightVector(0.5, 0.6, 0.7);
 		
 		assertEquals(0.5, vector.get(0), DELTA);
 		assertEquals(0.6, vector.get(1), DELTA);
 		assertEquals(0.7, vector.get(2), DELTA);
 		
-		WeightVectorND temp = vector.add(2.0);
+		WeightVector temp = vector.add(2.0);
 		
 		assertEquals(2.5, temp.get(0), DELTA);
 		assertEquals(2.6, temp.get(1), DELTA);

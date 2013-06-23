@@ -18,7 +18,7 @@ import lib.math.Bits;
 import som.SelfOrganizingMap2D;
 import som.SelfOrganizingMapConfig;
 import som.features.AbstractWeightVector;
-import som.features.WeightVectorND;
+import som.features.WeightVector;
 import som.map.AbstractMapLocation;
 import som.save.State;
 
@@ -120,7 +120,7 @@ public class SelfOrganizingMapRGBViewerWeightVector24D extends Canvas {
 	private AbstractWeightVector buildWeightVector(int rgb) {
 		Bits b = new Bits(24, rgb);
 		System.out.println(b);
-		return new WeightVectorND(b.toDoubleArray());
+		return new WeightVector(b.toDoubleArray());
 	}
 
 	public void run() {
@@ -183,7 +183,7 @@ public class SelfOrganizingMapRGBViewerWeightVector24D extends Canvas {
 		strategy.show();
 	}
 
-	private void drawSquare(int x, int y, WeightVectorND vector, Graphics2D graphics) {
+	private void drawSquare(int x, int y, WeightVector vector, Graphics2D graphics) {
 
 		Bits b = new Bits(vector.get());
 		// System.out.println(Arrays.toString(vector.get()));
