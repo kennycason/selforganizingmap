@@ -20,8 +20,8 @@ public class Bits {
 		bits = arr.length;
 		value = 0;
 		for(int i = arr.length - 1; i >= 0; i--) {
+            value <<= 1;
 			value += ((long)roundingStrategy.round(arr[i]));
-			value <<= 1;
 		}
 	}
 	
