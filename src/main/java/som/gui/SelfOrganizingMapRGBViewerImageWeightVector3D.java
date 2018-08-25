@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SelfOrganizingMapRGBViewerImageWeightVector6D extends Canvas {
+public class SelfOrganizingMapRGBViewerImageWeightVector3D extends Canvas {
 
 	SelfOrganizingMap2D som;
 
@@ -41,14 +41,14 @@ public class SelfOrganizingMapRGBViewerImageWeightVector6D extends Canvas {
 	private BufferStrategy strategy;
 
 	public static void main(String argv[]) throws IOException {
-		SelfOrganizingMapRGBViewerImageWeightVector6D somv =new SelfOrganizingMapRGBViewerImageWeightVector6D();
+		SelfOrganizingMapRGBViewerImageWeightVector3D somv =new SelfOrganizingMapRGBViewerImageWeightVector3D();
 
 		somv.init();
 
 		somv.run();
 	}
 
-	public SelfOrganizingMapRGBViewerImageWeightVector6D() {
+	public SelfOrganizingMapRGBViewerImageWeightVector3D() {
 		// create a frame 
 		JFrame container = new JFrame("Self Organizing Map 2D Viewer");
 				
@@ -93,7 +93,7 @@ public class SelfOrganizingMapRGBViewerImageWeightVector6D extends Canvas {
 	
 	public void init() throws IOException {
 		config = new SelfOrganizingMapConfig();
-		config.weightVectorDimension = 6;
+		config.weightVectorDimension = 3;
 		config.radius = 50;
 		config.dimX = dim;
 		config.dimY = dim;
@@ -110,17 +110,11 @@ public class SelfOrganizingMapRGBViewerImageWeightVector6D extends Canvas {
 		for (int x = 0; x < bufferedImage.getWidth(); x += 5) {
 			for (int y = 0; y < bufferedImage.getHeight(); y += 5) {
 				final int rgb = bufferedImage.getRGB(x, y);
+				int red = (rgb >> 16) & 0xFF;
+				int green = (rgb >> 8) & 0xFF;
+				int blue = rgb & 0xFF;
 
-				// 6d
-				int bl = rgb & 0xF;
-				int bh = (rgb >> 4) & 0xF;
-				int gl = (rgb >> 8) & 0xF;
-				int gh = (rgb >> 12) & 0xF;
-				int rl = (rgb >> 16) & 0xF;
-				int rh = (rgb >> 20) & 0xF;
-				System.out.println(rh + " " + rl + " " + gh + " " + gl + " " + bh + " " + bl);
-
-				final WeightVector vector = new WeightVector(rh / 15.0, rl / 15.0, gh / 15.0, gl / 15.0, bh / 15.0, bl / 15.0);
+				final WeightVector vector = new WeightVector(red / 255.0, green / 255.0, blue / 255.0);
 
 				System.out.println(vector);
 				features.add(vector);
@@ -183,9 +177,9 @@ public class SelfOrganizingMapRGBViewerImageWeightVector6D extends Canvas {
 		for(int y = 0; y < config.dimY; y++) {
 			for(int x = 0; x < config.dimX; x++) {
 				drawSquare(x, y,
-						som.getWeightVectors()[x][y].get(0) / 2.0 + som.getWeightVectors()[x][y].get(1) / 2.0,
-						som.getWeightVectors()[x][y].get(2) / 2.0 + som.getWeightVectors()[x][y].get(3) / 2.0,
-						som.getWeightVectors()[x][y].get(4) / 2.0 + som.getWeightVectors()[x][y].get(5) / 2.0,
+						som.getWeightVectors()[x][y].get(0),
+						som.getWeightVectors()[x][y].get(1),
+						som.getWeightVectors()[x][y].get(2),
 						g);
 			}		
 		}
